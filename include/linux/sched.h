@@ -3,6 +3,8 @@
 
 #include <uapi/linux/sched.h>
 
+#include <linux/sched/prio.h>
+
 
 struct sched_param {
 	int sched_priority;
@@ -1067,6 +1069,9 @@ struct task_struct {
 #ifdef CONFIG_SMP
 	struct llist_node wake_entry;
 	int on_cpu;
+	struct task_struct *last_wakee;
+	unsigned long wakee_flips;
+	unsigned long wakee_flip_decay_ts;
 #endif
 	int on_rq;
 
